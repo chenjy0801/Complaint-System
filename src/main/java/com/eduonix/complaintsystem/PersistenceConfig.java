@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class PersistenceConfig {
 	
 	@Bean
 	LocalSessionFactoryBean sessionFactory() {
-		LocalSessionFactoryBean sessionFactory=new LocalSessionFactoryBean();
+		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setPackagesToScan(new String[] {"com.eduonix.complaintsystem.entities"});
 		sessionFactory.setHibernateProperties(hibernateConfig());
@@ -38,13 +38,15 @@ public class PersistenceConfig {
 	
 	@Bean
 	public DataSource dataSource() {
-		 BasicDataSource dataSource=new BasicDataSource();
-		 dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-		 dataSource.setUrl(env.getProperty("jdbc.url"));
-		 dataSource.setUsername(env.getProperty("jdbc.user"));
-		 dataSource.setPassword(env.getProperty("jdbc.pass"));
-		 
-		 return dataSource;
+		BasicDataSource dataSource = new BasicDataSource();
+		
+		dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+		dataSource.setUrl(env.getProperty("jdbc.url"));
+		dataSource.setUsername(env.getProperty("jdbc.user"));
+		dataSource.setPassword(env.getProperty("jdbc.pass"));
+		
+		return dataSource;
+		
 	}
 	
 	@Bean
@@ -52,17 +54,16 @@ public class PersistenceConfig {
 	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
 		HibernateTransactionManager transacManager = new HibernateTransactionManager();
 		transacManager.setSessionFactory(sessionFactory);
-		
 		return transacManager;
 	}
 	
 	Properties hibernateConfig() {
 		Properties toReturn = new Properties();
+		
 		toReturn.setProperty("hibernate.hdm2ddl.auto", env.getProperty("hibernate.hdm2ddl.auto"));
 		toReturn.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		toReturn.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 		
 		return toReturn;
 	}
-
 }
