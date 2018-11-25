@@ -2,23 +2,39 @@ package com.eduonix.complaintsystem.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="complaints")
 public class Complaint {
 	
 	@Id
+	@GenericGenerator(name="inc",strategy="increment")
+	@GeneratedValue(generator="inc")
 	@Column(name="id")
 	private Integer id;
 	
 	@Column(name="message")
 	private String message;
 	
-	@Column(name="sender_name")
+	public Complaint( String message, String senderName, String senderEmail) {
+		super();
+		this.message = message;
+		this.senderName = senderName;
+		this.senderEmail = senderEmail;
+	}
+
+	@Column(name="sender_Name")
 	private String senderName;
 	
+	public Complaint() {
+		super();
+	}
+
 	@Column(name="sender_email")
 	private String senderEmail;
 
@@ -50,19 +66,9 @@ public class Complaint {
 		return senderEmail;
 	}
 
-	public void setSenderEmail(String senderEmail) {
+	public void setSernderEmail(String sernderEmail) {
 		this.senderEmail = senderEmail;
 	}
+	
 
-	public Complaint(Integer id, String message, String senderName, String senderEmail) {
-		super();
-		this.id = id;
-		this.message = message;
-		this.senderName = senderName;
-		this.senderEmail = senderEmail;
-	}
-
-	public Complaint() {
-		super();
-	}
 }
