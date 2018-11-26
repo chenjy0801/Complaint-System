@@ -1,2 +1,2 @@
 # Complaint-System
-A simple complaint system with Spring
+A simple complaint system with SpringMVC, Hibernate, MySQL
